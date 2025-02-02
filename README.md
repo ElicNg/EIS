@@ -21,7 +21,7 @@ cd EIS
 chmod +x ./eis
 chmod +x install.sh
 sudo ./install.sh  
-nohup ./eis &
+PORT=8080 nohup ./eis &
 ```
 
 Open http://\<your-ip\>:8080
