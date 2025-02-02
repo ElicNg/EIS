@@ -6,6 +6,7 @@ import (
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/websocket"
 	"log"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -17,6 +18,12 @@ var messageChan = make(chan string)
 var conns []*websocket.Conn
 
 func main() {
+	// Read port from environment variable, default to 8080 if not set
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 	getConfig()
 
 	ws := websocket.New(websocket.DefaultGorillaUpgrader, websocket.Events{
@@ -60,7 +67,7 @@ func main() {
 
 	app.HandleDir("/static", iris.Dir("./static"))
 
-	app.Listen(":8080")
+	app.Listen(":" + port)
 }
 
 func home(ctx iris.Context) {
